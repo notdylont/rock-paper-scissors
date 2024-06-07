@@ -1,5 +1,6 @@
 let humanWs = 0;
 let computerWs = 0;
+let ties = 0;
 
 let getComputerChoice = () => {
     let x = Math.random();
@@ -32,8 +33,10 @@ let rps = (h, c) => {
             humanWs++;
             return 'Human Wins!';
         }
-        else if (h === c )
+        else if (h === c ){
+            ties++;
             return "It's a tie!";
+        }
         else {
             computerWs++;
             return 'Computer Wins!';
@@ -48,17 +51,20 @@ let rps = (h, c) => {
 let playRound = () => {
     let comp = getComputerChoice();
     let human = getHumanChoice();
+    console.log('Human: ' + human);
+    console.log('Computer: ' + comp);
     console.log(rps(human, comp));
 }
 
 let playGame = () => {
     humanWs = 0;
     computerWs = 0;
-    for (let i = 0 ; i < 5 ; i++) {
+    for (let i = 1 ; i <= 5 ; i++) {
         console.log(`Game ${i}!`);
         playRound();
+        console.log('\n');
     }
-    console.log(`The results are: \nHuman: ${humanWs} \nComputer: ${computerWs}`);
+    console.log(`The results are: \nHuman: ${humanWs} \nComputer: ${computerWs} \nTies: ${ties}`);
 }
 
 playGame();
