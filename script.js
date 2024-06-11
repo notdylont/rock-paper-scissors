@@ -1,8 +1,9 @@
 let humanWs = 0;
 let computerWs = 0;
 let ties = 0;
+const results = document.querySelector("#results");
 
-let getComputerChoice = () => {
+const getComputerChoice = () => {
     let x = Math.random();
     let result = '';
     if (x >= 0.67)
@@ -14,46 +15,45 @@ let getComputerChoice = () => {
     return result
 };
 
-let getHumanChoice = () => {
-    return prompt("Choose rock, paper or scissors!").toLowerCase();
-}
-
-let rps = (h, c) => {
-    let rpsArray = ['rock', 'paper', 'scissors']
-    if (rpsArray.includes(h)){
-        if (h === 'rock' && c === 'scissors'){
-            humanWs++;
-            return 'Human wins!';
-        }
-        else if(h === 'scissors' && c === 'paper') {
-            humanWs++;
-            return 'Human wins!';
-        }
-        else if(h === 'paper' && c === 'rock') {
-            humanWs++;
-            return 'Human Wins!';
-        }
-        else if (h === c ){
+const rps = (h, c) => {
+    while(humanWs != 5 || computerWs!= 5) {
+        if (h === c ) {
             ties++;
-            return "It's a tie!";
+            return 0;
+        }
+        else if ((h === 'rock' && c === 'scissors') || (h === 'scissors' && c === 'paper') ||
+            (h === 'paper' && c === 'rock')) {
+            humanWs++;
+            return 1;
         }
         else {
             computerWs++;
-            return 'Computer Wins!';
+            return -1;
         }
     }
-    else {
-        return 'Please choose rock, paper, or scissors!';
-    }
-        
-}
+}   
 
-let playRound = () => {
+const playRound = () => {
+    humanWs = 0;
+    computerWs = 0;
     let comp = getComputerChoice();
-    let human = getHumanChoice();
     console.log('Human: ' + human);
     console.log('Computer: ' + comp);
     console.log(rps(human, comp));
+}
+
+const game = document.querySelectorAll(".btn");
+game.forEach(function(btns) {
+    btns.addEventListener("click", function() {
+        let human = btns.textContent.toLowerCase();
+        let comp = getComputerChoice();
+        console.log(rps(human, comp));
+    });
+});
+
+/*
+const getHumanChoice = () => {
+    return prompt("Choose rock, paper or scissors!").toLowerCase();
 }
 
 let playGame = () => {
@@ -66,5 +66,5 @@ let playGame = () => {
     }
     console.log(`The results are: \nHuman: ${humanWs} \nComputer: ${computerWs} \nTies: ${ties}`);
 }
-
 playGame();
+*/
