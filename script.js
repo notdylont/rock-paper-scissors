@@ -3,7 +3,7 @@ let computerWs = 0;
 let ties = 0;
 const results = document.querySelector(".results");
 const error = document.querySelector(".error");
-const reset = docuement.querySelector(".reset");
+const reset = document.querySelector(".reset");
 
 const getComputerChoice = () => {
     let x = Math.random();
@@ -43,16 +43,27 @@ game.forEach(function(btns) {
             winResults.textContent = winner;
             results.appendChild(winResults);
             error.textContent = "Cannot play more! Reset the game!";
+            game.forEach(element => {
+                element.disabled = true;
+            });
         }
         else {
             let human = btns.textContent.toLowerCase();
             let comp = getComputerChoice();
-            console.log('Human: ' + human + " " + humanWs);
-            console.log('Computer: ' + comp + " " + computerWs);
             const content = document.createElement("p");
             content.textContent = rps(human, comp);
             results.appendChild(content);
         }
+    });
+});
+
+reset.addEventListener("click", function () {
+    humanWs = 0;
+    computerWs = 0;
+    results.textContent = "";
+    error.textContent = "";
+    game.forEach(element => {
+        element.disabled = false;
     });
 });
 
