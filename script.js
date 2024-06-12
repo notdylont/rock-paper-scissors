@@ -1,7 +1,9 @@
 let humanWs = 0;
 let computerWs = 0;
 let ties = 0;
-const results = document.querySelector("#results");
+const results = document.querySelector(".results");
+const error = document.querySelector(".error");
+const reset = docuement.querySelector(".reset");
 
 const getComputerChoice = () => {
     let x = Math.random();
@@ -16,22 +18,48 @@ const getComputerChoice = () => {
 };
 
 const rps = (h, c) => {
-    while(humanWs != 5 || computerWs!= 5) {
-        if (h === c ) {
-            ties++;
-            return 0;
-        }
-        else if ((h === 'rock' && c === 'scissors') || (h === 'scissors' && c === 'paper') ||
-            (h === 'paper' && c === 'rock')) {
-            humanWs++;
-            return 1;
+     if (h === c ) {
+        ties++;
+        return "Tie!";
+    }
+    else if ((h === 'rock' && c === 'scissors') || (h === 'scissors' && c === 'paper') ||
+        (h === 'paper' && c === 'rock')) {
+        humanWs++;
+        return "Human win!";
+     }
+    else {
+        computerWs++;
+         return "Computer win!";
+    }
+}  
+
+
+const game = document.querySelectorAll(".btn");
+game.forEach(function(btns) {
+    btns.addEventListener("click", function() {
+        if(humanWs === 5 || computerWs === 5) {
+            let winner = humanWs > computerWs ? "Human wins the game!" : "Computer Wins the game!";
+            const winResults = document.createElement("p");
+            winResults.textContent = winner;
+            results.appendChild(winResults);
+            error.textContent = "Cannot play more! Reset the game!";
         }
         else {
-            computerWs++;
-            return -1;
+            let human = btns.textContent.toLowerCase();
+            let comp = getComputerChoice();
+            console.log('Human: ' + human + " " + humanWs);
+            console.log('Computer: ' + comp + " " + computerWs);
+            const content = document.createElement("p");
+            content.textContent = rps(human, comp);
+            results.appendChild(content);
         }
-    }
-}   
+    });
+});
+
+/*
+const getHumanChoice = () => {
+    return prompt("Choose rock, paper or scissors!").toLowerCase();
+}
 
 const playRound = () => {
     humanWs = 0;
@@ -42,19 +70,6 @@ const playRound = () => {
     console.log(rps(human, comp));
 }
 
-const game = document.querySelectorAll(".btn");
-game.forEach(function(btns) {
-    btns.addEventListener("click", function() {
-        let human = btns.textContent.toLowerCase();
-        let comp = getComputerChoice();
-        console.log(rps(human, comp));
-    });
-});
-
-/*
-const getHumanChoice = () => {
-    return prompt("Choose rock, paper or scissors!").toLowerCase();
-}
 
 let playGame = () => {
     humanWs = 0;
