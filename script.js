@@ -1,6 +1,7 @@
 let humanWs = 0;
 let computerWs = 0;
 let ties = 0;
+let color = 0;
 const results = document.querySelector(".results");
 const error = document.querySelector(".error");
 const reset = document.querySelector(".reset");
@@ -20,15 +21,18 @@ const getComputerChoice = () => {
 const rps = (h, c) => {
      if (h === c ) {
         ties++;
+        color = 0;
         return "Tie!";
     }
     else if ((h === 'rock' && c === 'scissors') || (h === 'scissors' && c === 'paper') ||
         (h === 'paper' && c === 'rock')) {
         humanWs++;
-        return "Human win!";
+        color = 1;
+        return "You win!";
      }
     else {
         computerWs++;
+        color = -1;
          return "Computer win!";
     }
 }  
@@ -38,7 +42,7 @@ const game = document.querySelectorAll(".btn");
 game.forEach(function(btns) {
     btns.addEventListener("click", function() {
         if(humanWs === 5 || computerWs === 5) {
-            let winner = humanWs > computerWs ? "Human wins the game!" : "Computer Wins the game!";
+            let winner = humanWs > computerWs ? "You win the game!" : "Computer wins the game!";
             const winResults = document.createElement("p");
             winResults.textContent = winner;
             results.appendChild(winResults);
@@ -53,7 +57,14 @@ game.forEach(function(btns) {
             const content = document.createElement("p");
             content.textContent = rps(human, comp);
             results.appendChild(content);
-        }
+            content.setAttribute("style", "margin:0;")
+            if (color === 1)
+                content.style.color = "green";
+            else if (color === -1) 
+                content.style.color = "red";
+            else
+            content.style.color = "yellow";
+         }
     });
 });
 
