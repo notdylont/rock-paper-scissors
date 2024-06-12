@@ -38,35 +38,39 @@ const rps = (h, c) => {
     }
 }  
 
+const checkScore = () => {
+    if(humanWs === 5 || computerWs === 5) {
+        let winner = humanWs > computerWs ? "You win the game!" : "Computer wins the game!";
+        const winResults = document.createElement("p");
+        winResults.textContent = winner;
+        results.appendChild(winResults);
+        error.textContent = "Cannot play more! Reset the game!";
+        game.forEach(element => {
+        element.disabled = true;
+        });
+        return true;
+    }
+};
+
 
 const game = document.querySelectorAll(".btn");
 game.forEach(function(btns) {
     btns.addEventListener("click", function() {
-        if(humanWs === 5 || computerWs === 5) {
-            let winner = humanWs > computerWs ? "You win the game!" : "Computer wins the game!";
-            const winResults = document.createElement("p");
-            winResults.textContent = winner;
-            results.appendChild(winResults);
-            error.textContent = "Cannot play more! Reset the game!";
-            game.forEach(element => {
-                element.disabled = true;
-            });
-        }
-        else {
-            let human = btns.textContent.toLowerCase();
-            let comp = getComputerChoice();
-            const content = document.createElement("p");
-            content.textContent = rps(human, comp);
-            score.textContent = `You: ${humanWs}     Computer: ${computerWs}`
-            results.appendChild(content);
-            content.setAttribute("style", "margin:0;")
-            if (color === 1)
-                content.style.color = "green";
-            else if (color === -1) 
-                content.style.color = "red";
-            else
+        let human = btns.textContent.toLowerCase();
+        let comp = getComputerChoice();
+        const content = document.createElement("p");
+        content.textContent = rps(human, comp);
+        score.textContent = `You: ${humanWs}     Computer: ${computerWs}`
+        results.appendChild(content);
+        content.setAttribute("style", "margin:0;")
+        if (color === 1)
+            content.style.color = "green";
+        else if (color === -1) 
+            content.style.color = "red";
+        else
             content.style.color = "yellow";
-         }
+        
+        checkScore();
     });
 });
 
@@ -81,30 +85,3 @@ reset.addEventListener("click", function () {
     });
 });
 
-/*
-const getHumanChoice = () => {
-    return prompt("Choose rock, paper or scissors!").toLowerCase();
-}
-
-const playRound = () => {
-    humanWs = 0;
-    computerWs = 0;
-    let comp = getComputerChoice();
-    console.log('Human: ' + human);
-    console.log('Computer: ' + comp);
-    console.log(rps(human, comp));
-}
-
-
-let playGame = () => {
-    humanWs = 0;
-    computerWs = 0;
-    for (let i = 1 ; i <= 5 ; i++) {
-        console.log(`Game ${i}!`);
-        playRound();
-        console.log('\n');
-    }
-    console.log(`The results are: \nHuman: ${humanWs} \nComputer: ${computerWs} \nTies: ${ties}`);
-}
-playGame();
-*/
