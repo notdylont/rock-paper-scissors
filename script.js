@@ -5,6 +5,7 @@ let color = 0;
 const results = document.querySelector(".results");
 const error = document.querySelector(".error");
 const reset = document.querySelector(".reset");
+const score = document.querySelector(".score");
 
 const getComputerChoice = () => {
     let x = Math.random();
@@ -56,6 +57,7 @@ game.forEach(function(btns) {
             let comp = getComputerChoice();
             const content = document.createElement("p");
             content.textContent = rps(human, comp);
+            score.textContent = `You: ${humanWs}     Computer: ${computerWs}`
             results.appendChild(content);
             content.setAttribute("style", "margin:0;")
             if (color === 1)
@@ -71,6 +73,7 @@ game.forEach(function(btns) {
 reset.addEventListener("click", function () {
     humanWs = 0;
     computerWs = 0;
+    score.textContent = `You: ${humanWs}     Computer: ${computerWs}`
     results.textContent = "";
     error.textContent = "";
     game.forEach(element => {

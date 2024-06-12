@@ -12,6 +12,12 @@ header {
     background-color: #090909;
 }
 
+.score{
+    text-align: center;
+    font-weight: bold;
+    margin-top: 32px;
+}
+
 .btn, .reset {
     padding: 4px;
     background-color: #F9DAD0;
